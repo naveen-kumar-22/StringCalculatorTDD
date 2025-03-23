@@ -29,4 +29,13 @@ class StringCalculatorTest < Minitest::Test
   def test_add_custom_delimiter_returns_sum
     assert_equal 3, @calculator.add("//;\n1;2")
   end
+
+  def test_add_negative_number_throws_exception
+    assert_raises(ArgumentError) { @calculator.add("-1,2") }
+  end
+  
+  def test_add_multiple_negative_numbers_throws_exception_with_all_negatives
+    exception = assert_raises(ArgumentError) { @calculator.add("-1,-2,3") }
+    assert_equal "negatives not allowed: -1, -2", exception.message
+  end
 end
