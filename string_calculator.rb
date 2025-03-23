@@ -15,14 +15,24 @@ class StringCalculator
     end
   
     numbers.gsub!("\n", delimiter)
-    number_list = numbers.split(delimiter).map(&:to_i)
-    negative_numbers = number_list.select { |n| n < 0 }
-  
+    number_strings = numbers.split(Regexp.new(delimiter))
+    number_list = []
+    negative_numbers = []
+
+    number_strings.each do |number_string|
+      next if number_string.empty?
+
+      number = number_string.to_i
+      if number < 0
+        negative_numbers << number
+      elsif number <= 1000
+        number_list << number
+      end
+    end
     raise ArgumentError, "negatives not allowed: #{negative_numbers.join(", ")}" unless negative_numbers.empty?
-  
     number_list.sum
   end
-  
+
   def get_called_count
     @called_count
   end
