@@ -1,5 +1,10 @@
 class StringCalculator
+  def initialize
+    @called_count = 0
+  end
+
   def add(numbers)
+    @called_count += 1
     return 0 if numbers.empty?
   
     delimiter = ","
@@ -16,5 +21,9 @@ class StringCalculator
     raise ArgumentError, "negatives not allowed: #{negative_numbers.join(", ")}" unless negative_numbers.empty?
   
     number_list.sum
+  end
+  
+  def get_called_count
+    @called_count
   end
 end
